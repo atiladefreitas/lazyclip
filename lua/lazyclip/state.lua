@@ -14,11 +14,6 @@ function State.init()
 			State.add_item(vim.fn.getreg('"'))
 		end,
 	})
-
-	local current = vim.fn.getreg('"')
-	if current and current ~= "" then
-		State.add_item(current)
-	end
 end
 
 function State.add_item(item)
