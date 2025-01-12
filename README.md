@@ -143,7 +143,7 @@ LazyClip was built with the Neovim community in mind. Special thanks to all the 
 
 ---
 
-## My All plugins
+## All my plugins
 | Repository | Description | Stars |
 |------------|-------------|-------|
 | [LazyClip](https://github.com/atiladefreitas/lazyclip) | A Simple Clipboard Manager | ![Stars](https://img.shields.io/github/stars/atiladefreitas/lazyclip?style=social) |
