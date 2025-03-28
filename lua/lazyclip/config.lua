@@ -13,6 +13,7 @@ local Config = {
 		prev_page = "h",
 		next_page = "l",
 		paste_selected = "<CR>",
+		copy_selected = "y",
 		move_up = "k",
 		move_down = "j",
 		delete_item = "d",
