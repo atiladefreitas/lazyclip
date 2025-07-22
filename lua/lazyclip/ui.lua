@@ -297,6 +297,13 @@ local function setup_buffer_keymaps(bufnr, winnr, preview_bufnr)
 		},
 		{
 			"n",
+			Config.keymaps.copy_selected,
+			function()
+				UI.copy_selected_to_clipboard(winnr)
+			end,
+		},
+		{
+			"n",
 			Config.keymaps.move_down,
 			function()
 				api.nvim_command("normal! j")
@@ -417,6 +424,20 @@ function UI.paste_selected(winnr)
 	else
 		notify("Invalid selection!", log_levels.WARN)
 	end
+end
+
+function UI.copy_selected_to_clipboard(winnr)
+    local cursor = api.nvim_win_get_cursor(winnr)
+    local line = cursor[1]
+    local item = State.get_item_at_index(line)
+
+    if item then
+        UI.close_windows(winnr)
+        vim.fn.setreg('+', item)
+        notify("Item copied to clipboard!", log_levels.INFO)
+    else
+        notify("Invalid selection!", log_levels.WARN)
+    end
 end
 
 return UI
