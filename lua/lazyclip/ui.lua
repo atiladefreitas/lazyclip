@@ -77,7 +77,6 @@ local function setup_highlights()
 		LazyClipContent = { link = "String" },
 		LazyClipPageInfo = { link = "Comment" },
 		LazyClipTimestamp = { link = "Comment" },
-		LazyClipCopyCount = { link = "Constant" },
 	}
 
 	for group, opts in pairs(highlights) do
@@ -314,7 +313,7 @@ local function setup_buffer_keymaps(bufnr, winnr, preview_bufnr)
 		},
 	}
 
-	keymap.set("n", "d", function()
+	keymap.set("n", Config.keymaps.delete_item, function()
 		local cursor = api.nvim_win_get_cursor(winnr)
 		local line = cursor[1]
 		if State.delete_item(line) then
@@ -363,7 +362,7 @@ end
 
 function UI.open_window()
 	if #State.clipboard == 0 then
-		notify("Clipboard is empty!", log_levels.INFO)
+		notify("Clipboard is empty! Copy something to get started.", log_levels.INFO)
 		return
 	end
 
@@ -389,7 +388,7 @@ function UI.open_window()
 	UI.preview_bufnr = preview_bufnr
 end
 
-function UI.navigate_page(_, bufnr, direction)
+function UI.navigate_page(winnr, bufnr, direction)
 	if State.navigate_page(direction) then
 		render_content(bufnr)
 	end
@@ -400,6 +399,7 @@ function UI.paste_and_close(winnr, index)
 	if item then
 		UI.close_windows(winnr)
 		api.nvim_paste(item, false, -1)
+		notify(string.format("Pasted item %d", index), log_levels.INFO)
 	else
 		notify("Invalid index!", log_levels.WARN)
 	end
@@ -413,6 +413,7 @@ function UI.paste_selected(winnr)
 	if item then
 		UI.close_windows(winnr)
 		api.nvim_paste(item, false, -1)
+		notify("Pasted selected item", log_levels.INFO)
 	else
 		notify("Invalid selection!", log_levels.WARN)
 	end
